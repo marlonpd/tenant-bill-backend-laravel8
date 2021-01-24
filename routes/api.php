@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->namespace('Api\V1')->group(function () {
+    // Route::middleware(['auth:api', 'verified'])->group(function () {
+    //     // Comments
+    //     Route::apiResource('comments', 'CommentController')->only('destroy');
+
+    // });
+
+    Route::post('/authenticate', 'api\AuthenticateController@authenticate')->name('authenticate');
+    Route::post('/register', 'api\AuthenticateController@register')->name('register');
+
 });
