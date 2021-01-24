@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Eloquent;   
 
-use App\Repository\EloquentRepositoryInterface; 
-use Illuminate\Database\Eloquent\Model;   
+use App\Repositories\EloquentRepositoryInterface; 
+use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository implements EloquentRepositoryInterface 
 {     
