@@ -9,6 +9,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\UserRepositoryInterface;
 use JWTAuth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -33,8 +34,11 @@ class AuthController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        $user = $this->userRepository->findByEmail($request->email);
+
         return response()->json([
             'success' => true,
+            'user'  => $user,
             'token' => $jwt_token,
         ]);
     }
