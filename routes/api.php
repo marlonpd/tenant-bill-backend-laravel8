@@ -14,14 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('')->namespace('App\Http\Controllers')->group(function () {
+Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
     // Route::middleware(['auth:api', 'verified'])->group(function () {
     //     // Comments
     //     Route::apiResource('comments', 'CommentController')->only('destroy');
 
     // });
-
+    
+    Route::post('/logout', 'AuthController@logout')->name('logout');
     Route::post('/authenticate', 'AuthController@authenticate')->name('authenticate');
     Route::post('/register', 'AuthController@register')->name('register');
 
+    Route::get('/tenants', 'TenantController@index')->name('fetchAllTenants');
+    Route::post('/tenant/store', 'TenantController@store')->name('storeTenants');
+    Route::get('/tenant/{id}', 'TenantController@show')->name('showTenant');
 });

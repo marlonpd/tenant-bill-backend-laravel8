@@ -17,6 +17,7 @@ class AuthController extends Controller
   
     public function __construct(UserRepositoryInterface $userRepository)
     {
+        $this->middleware('auth:api', ['except' => ['authenticate']]);
         $this->userRepository = $userRepository;
     }
     /**
@@ -43,6 +44,14 @@ class AuthController extends Controller
         ]);
     }
 
+    public function logout() 
+    {
+        JWTAuth::logout();
+
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
     public function register(RegisterRequest $request) 
     {
         
@@ -59,8 +68,34 @@ class AuthController extends Controller
         if ($user) {
             return response()->json(['message' => 'Successfully created an account']);
         } else {
-            return response()->json(['message' => 'Encountered an error'], 401);
+            return response()->json(['message' => 'Encountered an error'], Response::HTTP_BAD_REQUEST);
         }
+    }
+
+     /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 
 }
