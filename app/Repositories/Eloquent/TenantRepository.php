@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories\Eloquent;
 
 use App\Models\Tenant;
@@ -10,7 +9,7 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
 {
 
    /**
-    * UserRepository constructor.
+    * TenantRepository constructor.
     *
     * @param Tenant $tenant
     */
@@ -33,5 +32,14 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
 
       return $tenant;
   }
+
+  public function update(string $id, Tenant $tenant): ?Tenant 
+  {
+     $tenant = $this->model::where('id', $id)->update($tenant);   
+
+     return $tenant;
+  }
+
+
 
 }

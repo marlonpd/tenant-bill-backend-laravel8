@@ -26,6 +26,7 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
     Route::post('/register', 'AuthController@register')->name('register');
 
     Route::get('/tenants', 'TenantController@index')->name('fetchAllTenants');
-    Route::post('/tenant/store', 'TenantController@store')->name('storeTenants');
+    Route::post('/tenant/store', 'TenantController@store')->name('storeTenant');
+    Route::post('/tenant/delete', 'TenantController@destroy')->name('deleteTenant');
     Route::get('/tenant/{id}', 'TenantController@show')->name('showTenant');
 });
