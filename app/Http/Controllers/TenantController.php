@@ -133,8 +133,9 @@ class TenantController extends Controller
      */
     public function destroy(DeleteTenantRequest $request)
     {
-        $tenant = $this->tenantRepository->findById($request->id);
+        $tenant = $this->tenantRepository->delete($request->id);
 
+        error_log($tenant);
         if ($tenant) {
             return response()->json([
                 'success' => true,

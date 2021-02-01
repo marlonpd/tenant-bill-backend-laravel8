@@ -41,5 +41,12 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
   }
 
 
+  public function delete(string $id) {
+    $deletedRows = $this->model::where('id', $id)->delete();
+
+    return $deletedRows;
+  }
+
+
 
 }
