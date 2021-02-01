@@ -47,8 +47,7 @@ class AuthController extends Controller
     public function logout() 
     {
         JWTAuth::logout();
-
-
+        
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -62,8 +61,6 @@ class AuthController extends Controller
         ];
 
         $user = $this->userRepository->create($payload);
-
-        error_log($user);
 
         if ($user) {
             return response()->json(['message' => 'Successfully created an account']);

@@ -33,7 +33,7 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
       return $tenant;
   }
 
-  public function update(string $id, Tenant $tenant): ?Tenant 
+  public function update(string $id, array $tenant): int 
   {
      $tenant = $this->model::where('id', $id)->update($tenant);   
 
