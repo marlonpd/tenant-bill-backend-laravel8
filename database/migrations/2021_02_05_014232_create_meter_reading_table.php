@@ -13,9 +13,9 @@ class CreateMeterReadingTable extends Migration
      */
     public function up()
     {
-        Schema::table('meter_readings', function (Blueprint $table) {
+        Schema::create('meter_readings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teant_id')->references('id')->on('tenants'); 
+            $table->foreignId('tenant_id')->references('id')->on('tenants'); 
             $table->dateTime('from_date');
             $table->double('present_reading_kwh', 8, 2);
             $table->dateTime('to_date');
@@ -33,8 +33,8 @@ class CreateMeterReadingTable extends Migration
      */
     public function down()
     {
-        Schema::table('meter_reading', function (Blueprint $table) {
-            //
+        Schema::table('meter_readings', function (Blueprint $table) { 
+            Schema::dropIfExists('meter_readings');
         });
     }
 }
