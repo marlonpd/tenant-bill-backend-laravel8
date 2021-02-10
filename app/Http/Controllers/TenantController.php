@@ -79,7 +79,10 @@ class TenantController extends Controller
     {
         $tenant = $this->tenantRepository->findById($id);
 
-        return $tenant;
+        return response()->json([
+            'success' => true,
+            'tenant' =>  new TenantResource($tenant),
+        ]);
     }
 
     /**

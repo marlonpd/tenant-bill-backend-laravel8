@@ -13,7 +13,7 @@ class UpdateTenantRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateTenantRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:100',
+            'meterNumber' => 'required|max:10',
+            'meterInitialReading' => 'required|max:10',
         ];
     }
 }

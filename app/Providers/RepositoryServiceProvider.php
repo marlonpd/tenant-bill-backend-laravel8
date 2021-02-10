@@ -9,6 +9,8 @@ use App\Repositories\Eloquent\BaseRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\UserRepositoryInterface; 
 use App\Repositories\Eloquent\UserRepository; 
+use App\Repositories\MeterReadingRepositoryInterface; 
+use App\Repositories\Eloquent\MeterReadingRepository; 
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(TenantRepositoryInterface::class, TenantRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(MeterReadingRepositoryInterface::class, MeterReadingRepository::class);   
     }
 
     /**

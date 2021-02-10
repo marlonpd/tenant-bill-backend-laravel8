@@ -13,7 +13,7 @@ class UpdateMeterReadingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class UpdateMeterReadingRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'tenantId' => 'required|max:100',
+            'fromDate' => 'required|max:100',
+            'presentReadingKwh' => 'required|max:100',
+            'toDate' => 'required|max:100',
+            'previousReadingKwh' => 'required|max:100',
+            'consumedKwh' => 'required|max:100',
+            'rate' => 'required|max:100',
+            'bill' => 'required|max:100',
         ];
     }
 }

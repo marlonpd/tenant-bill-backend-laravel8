@@ -24,12 +24,12 @@ class StoreMeterReadingRequest extends FormRequest
     public function rules()
     {
         return [
-            'teant_id' => 'required|max:100',
-            'from_date' => 'required|max:100',
-            'present_reading_kwh' => 'required|max:100',
-            'to_date' => 'required|max:100',
-            'previous_reading_kwh' => 'required|max:100',
-            'consumed_kwh' => 'required|max:100',
+            'tenantId' => 'required|max:100',
+            'fromDate' => 'required|max:100',
+            'presentReadingKwh' => 'required|max:100',
+            'toDate' => 'required|max:100',
+            'previousReadingKwh' => 'required|max:100',
+            'consumedKwh' => 'required|max:100',
             'rate' => 'required|max:100',
             'bill' => 'required|max:100',
         ];

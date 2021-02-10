@@ -30,4 +30,10 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
     Route::post('/tenant/delete', 'TenantController@destroy')->name('deleteTenant');
     Route::post('/tenant/update', 'TenantController@update')->name('updateTenant');
     Route::get('/tenant/{id}', 'TenantController@show')->name('showTenant');
+
+    Route::get('/meter-readings', 'MeterReadingController@index')->name('fetchAllMeterReadings');
+    Route::post('/meter-reading/update', 'MeterReadingController@update')->name('updateMeterReading');
+    Route::post('/meter-reading/store', 'MeterReadingController@store')->name('storeMeterReading');
+    Route::post('/meter-reading/delete', 'MeterReadingController@destroy')->name('deleteMeterReading');
+    //Route::get('/meter-reading/{id}', 'MeterReadingController@show')->name('showMeterReading');
 });
