@@ -15,7 +15,7 @@ class PowerRate extends Model
      * @var array
      */
     protected $fillable = [
-        'teant_id',
+        'owner_id',
         'rate',
     ];
     

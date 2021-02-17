@@ -8,6 +8,7 @@ use App\Http\Requests\StoreTenantRequest;
 use App\Http\Requests\UpdateTenantRequest;
 use App\Http\Requests\DeleteTenantRequest;
 use App\Http\Resources\TenantResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class TenantController extends Controller
 {

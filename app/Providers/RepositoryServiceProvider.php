@@ -11,6 +11,8 @@ use App\Repositories\UserRepositoryInterface;
 use App\Repositories\Eloquent\UserRepository; 
 use App\Repositories\MeterReadingRepositoryInterface; 
 use App\Repositories\Eloquent\MeterReadingRepository; 
+use App\Repositories\PowerRateRepositoryInterface; 
+use App\Repositories\Eloquent\PowerRateRepository; 
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TenantRepositoryInterface::class, TenantRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(MeterReadingRepositoryInterface::class, MeterReadingRepository::class);   
+        $this->app->bind(PowerRateRepositoryInterface::class, PowerRateRepository::class);   
     }
 
     /**

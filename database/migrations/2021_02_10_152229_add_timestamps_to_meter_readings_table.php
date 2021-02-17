@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePowerRateTable extends Migration
+class AddTimestampsToMeterReadingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,7 @@ class CreatePowerRateTable extends Migration
      */
     public function up()
     {
-        Schema::create('power_rates', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('owner_id')->references('id')->on('users'); 
-            $table->double('rate', 8, 2);
+        Schema::table('meter_readings', function (Blueprint $table) {
             $table->timestamps();
         });
     }
@@ -28,8 +25,8 @@ class CreatePowerRateTable extends Migration
      */
     public function down()
     {
-        Schema::table('power_rates', function (Blueprint $table) {
-            Schema::dropIfExists('power_rates');
+        Schema::table('meter_readings', function (Blueprint $table) {
+            //
         });
     }
 }

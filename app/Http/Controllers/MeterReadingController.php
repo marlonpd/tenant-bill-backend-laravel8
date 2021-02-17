@@ -8,6 +8,7 @@ use App\Repositories\TenantRepositoryInterface;
 use App\Http\Resources\MeterReadingResource;
 use App\Http\Requests\UpdateMeterReadingRequest;
 use App\Http\Requests\StoreMeterReadingRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class MeterReadingController extends Controller
 {
@@ -26,10 +27,17 @@ class MeterReadingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($tenantId)
     {
+        if (!is_numeric($tenantId)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid tenant id',
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         return response()->json([
-            'meterReadings' =>  MeterReadingResource::collection($this->meterReadingRepository->all()),
+            'meterReadings' =>  MeterReadingResource::collection($this->meterReadingRepository->finyByTenantId($tenantId)),
         ]);
     }
 
