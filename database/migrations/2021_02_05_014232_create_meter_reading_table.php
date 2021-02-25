@@ -17,12 +17,12 @@ class CreateMeterReadingTable extends Migration
             $table->id();
             $table->foreignId('tenant_id')->references('id')->on('tenants'); 
             $table->dateTime('from_date');
-            $table->double('present_reading_kwh', 8, 2);
+            $table->double('present_reading_kwh', 18, 2);
             $table->dateTime('to_date');
-            $table->double('previous_reading_kwh', 8, 2);
-            $table->double('consumed_kwh', 8, 2);
-            $table->double('rate', 8, 2);
-            $table->double('bill', 8, 2);
+            $table->double('previous_reading_kwh', 18, 2);
+            $table->double('consumed_kwh', 18, 2);
+            $table->double('rate', 18, 2);
+            $table->double('bill', 18, 2);
         });
     }   
 
