@@ -27,12 +27,26 @@ class TenantController extends Controller
      */
     public function index()
     {
-
         $ownerId = JWTAuth::user()->id;
-
         
         return response()->json([
             'tenants' =>  TenantResource::collection($this->tenantRepository->findByOwnerId($ownerId)),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLimitedList($pageIndex)
+    {
+        $ownerId = JWTAuth::user()->id;
+        $tenantsCount = $this->tenantRepository->countByOwnerId($ownerId);
+
+        return response()->json([
+            'tenants' =>  TenantResource::collection($this->tenantRepository->findByOwnerIdLimitedList($ownerId, $pageIndex)),
+            'count' => $tenantsCount
         ]);
     }
 

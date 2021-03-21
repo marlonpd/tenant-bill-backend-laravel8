@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 class TenantRepository extends BaseRepository implements TenantRepositoryInterface
 {
 
+    private $limit = 10;
+
    /**
     * TenantRepository constructor.
     *
@@ -26,16 +28,34 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
        return $this->model->all();    
    }
 
+   /**
+    * @return Collection
+    */
+    public function findByOwnerIdLimitedList(int $ownerId, int $pageIndex): Collection
+    {
+        return $this->model::where('owner_id', $ownerId)
+                            ->limit($this->limit)
+                            ->offset(($pageIndex-1)  * $this->limit)
+                            ->get();
+    }
+
    public function findById(string $id): ?Tenant 
    {
       $tenant = $this->model::where('id', $id)->first();   
 
       return $tenant;
-  }
+    }
 
   public function findByOwnerId(string $ownerId): ?Collection
   {
       $tenants = $this->model::where('owner_id', $ownerId)->get();   
+
+      return $tenants;
+  }
+
+  public function countByOwnerId(string $ownerId): ?int
+  {
+      $tenants = $this->model::where('owner_id', $ownerId)->count();   
 
       return $tenants;
   }
