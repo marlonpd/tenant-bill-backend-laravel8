@@ -8,6 +8,7 @@ use App\Http\Requests\StoreTenantRequest;
 use App\Http\Requests\UpdateTenantRequest;
 use App\Http\Requests\DeleteTenantRequest;
 use App\Http\Resources\TenantResource;
+use JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
 
 class TenantController extends Controller
@@ -26,8 +27,12 @@ class TenantController extends Controller
      */
     public function index()
     {
+
+        $ownerId = JWTAuth::user()->id;
+
+        
         return response()->json([
-            'tenants' =>  TenantResource::collection($this->tenantRepository->all()),
+            'tenants' =>  TenantResource::collection($this->tenantRepository->findByOwnerId($ownerId)),
         ]);
     }
 
@@ -49,7 +54,10 @@ class TenantController extends Controller
      */
     public function store(StoreTenantRequest $request)
     {
+        $ownerId = JWTAuth::user()->id;
+
         $payload = [
+            'owner_id' => $ownerId,
             'name' => $request->name,
             'meter_number' => $request->meterNumber,
             'meter_initial_reading'=> $request->meterInitialReading,
@@ -105,7 +113,7 @@ class TenantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(StoreTenantRequest $request)
-    {
+    {       
         $id = $request->id;
 
         $payload = [
@@ -119,7 +127,7 @@ class TenantController extends Controller
         if ($tenant) {
             return response()->json([
                 'success' => true,
-                'tenant' => new TenantResource($tenant),
+                'tenant' => new TenantResource($this->tenantRepository->findById($id)),
             ]);
         } else{
             return response()->json([

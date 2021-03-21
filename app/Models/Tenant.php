@@ -16,6 +16,7 @@ class Tenant extends Model
      */
     protected $fillable = [
         'name',
+        'owner_id',
         'meter_number',
         'meter_initial_reading',
     ];

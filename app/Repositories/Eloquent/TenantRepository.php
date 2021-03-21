@@ -33,6 +33,13 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
       return $tenant;
   }
 
+  public function findByOwnerId(string $ownerId): ?Collection
+  {
+      $tenants = $this->model::where('owner_id', $ownerId)->get();   
+
+      return $tenants;
+  }
+
   public function update(string $id, array $tenant): int 
   {
      $tenant = $this->model::where('id', $id)->update($tenant);   
