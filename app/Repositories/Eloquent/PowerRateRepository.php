@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 
 class PowerRateRepository extends BaseRepository implements PowerRateRepositoryInterface
 {
+  private $limit = 10;
 
    /**
     * PowerRateRepository constructor.
@@ -34,6 +35,24 @@ class PowerRateRepository extends BaseRepository implements PowerRateRepositoryI
   public function findByOwnerId(int $ownerId): ?Collection
   {
     return $this->model::where('owner_id', $ownerId)->get();   
+  }
+
+   /**
+  * @return Collection
+  */
+  public function findByOwnerIdLimitedList(int $ownerId, int $pageIndex): Collection
+  {
+    return $this->model::where('owner_id', $ownerId)
+                          ->limit($this->limit)
+                          ->offset(($pageIndex-1)  * $this->limit)
+                          ->get();
+  }
+
+  public function countByOwnerId(string $ownerId): ?int
+  {
+    $tenants = $this->model::where('owner_id', $ownerId)->count();   
+
+    return $tenants;
   }
 
   public function findCurrentRateByOwner(int $ownerId): ?PowerRate

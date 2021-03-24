@@ -46,6 +46,7 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
         Route::post('/power-rate/delete', 'PowerRateController@destroy')->name('deletePowerRate');
         Route::post('/power-rate/update', 'PowerRateController@update')->name('updatePowerRate');
         Route::get('/power-rate/{id}', 'PowerRateController@show')->name('showPowerRate');
+        Route::get('/power-rates/{pageIndex}/get', 'PowerRateController@getLimitedList')->name('getLimitedList');
     });
 
 

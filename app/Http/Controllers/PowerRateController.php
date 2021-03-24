@@ -34,6 +34,22 @@ class PowerRateController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLimitedList($pageIndex)
+    {
+        $ownerId = JWTAuth::user()->id;
+        $powerRatesCount = $this->powerRateRepository->countByOwnerId($ownerId);
+
+        return response()->json([
+            'powerRates' =>  PowerRateResource::collection($this->powerRateRepository->findByOwnerIdLimitedList($ownerId, $pageIndex)),
+            'count' => $powerRatesCount
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
