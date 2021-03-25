@@ -39,6 +39,7 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
         Route::post('/meter-reading/update', 'MeterReadingController@update')->name('updateMeterReading');
         Route::post('/meter-reading/store', 'MeterReadingController@store')->name('storeMeterReading');
         Route::post('/meter-reading/delete', 'MeterReadingController@destroy')->name('deleteMeterReading');
+        Route::get('/meter-readings/$tenantId/{pageIndex}/get', 'MeterReadingController@getLimitedList')->name('getLimitedList');
         //Route::get('/meter-reading/{id}', 'MeterReadingController@show')->name('showMeterReading');
     
         Route::get('/power-rates', 'PowerRateController@index')->name('fetchAllPowerRates');
@@ -48,6 +49,4 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
         Route::get('/power-rate/{id}', 'PowerRateController@show')->name('showPowerRate');
         Route::get('/power-rates/{pageIndex}/get', 'PowerRateController@getLimitedList')->name('getLimitedList');
     });
-
-
 });

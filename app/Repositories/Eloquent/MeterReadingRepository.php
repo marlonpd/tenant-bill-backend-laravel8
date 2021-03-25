@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class MeterReadingRepository extends BaseRepository implements MeterReadingRepositoryInterface
 {
-
+    private $limit = 10;
     /**
     * MeterReadingRepository constructor.
     *
@@ -24,6 +24,22 @@ class MeterReadingRepository extends BaseRepository implements MeterReadingRepos
     public function all(): Collection
     {
       return $this->model->all();    
+    }
+
+    /**
+    * @return Collection
+    */
+    public function findByTenantIdLimitedList(int $tenantId, int $pageIndex): Collection
+    {
+      return $this->model::where('tenant_id', $tenantId)
+                            ->limit($this->limit)
+                            ->offset(($pageIndex-1)  * $this->limit)
+                            ->get();
+    }
+
+    public function countByTenantId(int $tenantId): ?int
+    {
+      return $this->model::where('tenant_id', $tenantId)->count();
     }
 
     public function findById(string $id): ?MeterReading 

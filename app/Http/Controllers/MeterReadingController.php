@@ -42,6 +42,21 @@ class MeterReadingController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLimitedList(int $tenantId, int $pageIndex)
+    {
+        $meterReadingsCount = $this->meterReadingRepository->countByTenantId($tenantId);
+
+        return response()->json([
+            'meterReadings' =>  MeterReadingResource::collection($this->meterReadingRepository->findByTenantIdLimitedList($tenantId, $pageIndex)),
+            'count' => $meterReadingsCount
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -60,7 +75,6 @@ class MeterReadingController extends Controller
     public function store(StoreMeterReadingRequest $request)
     {
         $tenantId = $request->tenantId;
-
         $tenant = $this->tenantRepository->find($tenantId);
 
         if (empty($tenant)) {
