@@ -53,7 +53,6 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request) 
     {
-        
         $payload = [
             'name'      => $request->name,
             'email'     => $request->email,

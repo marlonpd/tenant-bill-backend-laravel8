@@ -20,14 +20,15 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
     //     Route::apiResource('comments', 'CommentController')->only('destroy');
 
     // });
-    Route::post('/logout', 'AuthController@logout')->name('logout');
     Route::post('/authenticate', 'AuthController@authenticate')->name('authenticate');
+    Route::post('/register', 'AuthController@register')->name('register');
 
     Route::group([
-        'middleware' => 'api',
+        'middleware' => 'auth:api',
     ], function ($router) {
-    
-        Route::post('/register', 'AuthController@register')->name('register');
+        Route::post('/logout', 'AuthController@logout')->name('logout');
+        Route::post('/refresh/token', 'AuthController@refresh')->name('refresh');
+       
         Route::get('/tenants', 'TenantController@index')->name('fetchAllTenants');
         Route::get('/tenants/{pageIndex}/get', 'TenantController@getLimitedList')->name('getLimitedList');
         Route::post('/tenant/store', 'TenantController@store')->name('storeTenant');
