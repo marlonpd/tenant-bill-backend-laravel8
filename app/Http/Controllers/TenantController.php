@@ -17,7 +17,6 @@ class TenantController extends Controller
   
     public function __construct(TenantRepositoryInterface $tenantRepository)
     {
-      //  $this->middleware('auth:api', ['except' => ['authenticate']]);
         $this->tenantRepository = $tenantRepository;
     }
     /**
@@ -33,7 +32,6 @@ class TenantController extends Controller
             'tenants' =>  TenantResource::collection($this->tenantRepository->findByOwnerId($ownerId)),
         ]);
     }
-
     /**
      * Display a listing of the resource.
      *

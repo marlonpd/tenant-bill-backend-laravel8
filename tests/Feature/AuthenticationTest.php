@@ -40,10 +40,10 @@ class AuthenticationTest extends TestCase
         $faker = \Faker\Factory::create();
         
         $userData = [
-            "name" => "John Doe",
-            "email" => preg_replace('/@example\..*/', '@domain.com', $faker->unique()->safeEmail),
-            "password" => "demo12345",
-            "password2" => "demo12345",
+          "name" => "John Doe",
+          "email" => preg_replace('/@example\..*/', '@domain.com', $faker->unique()->safeEmail),
+          "password" => "demo12345",
+          "password2" => "demo12345",
         ];
 
         $this->json('POST', 'api/register', $userData, ['Accept' => 'application/json'])
@@ -92,18 +92,16 @@ class AuthenticationTest extends TestCase
             ]);
 
         $userData = [
-
             "email" => $email,
             "password" =>  $password,
-
         ];
 
-        $this->json('POST', 'api/authenticate', $userData, ['Accept' => 'application/json'])
+        $response = $this->json('POST', 'api/authenticate', $userData, ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
                 "success",
                 "user",
                 "token"
-            ]);;
+            ]);
     }
 }
