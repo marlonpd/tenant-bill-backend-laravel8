@@ -69,4 +69,44 @@ class TenantModuleTest extends TestCase
             ]
         );
     }
+
+    public function test_success_store_tenant()
+    {
+        $token = $this->get_login_token();        
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/store');
+        $response->assertStatus(200);
+        $response->assertJsonStructure(
+            [
+              'success',
+              'tenant',
+            ]
+        );
+    }
+
+
+    public function test_success_update_tenant()
+    {
+        $token = $this->get_login_token();
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/update');
+        $response->assertStatus(200);
+        $response->assertJsonStructure(
+            [
+              'success',
+              'tenant',
+            ]
+        );
+    }
+
+    public function test_success_delete_tenant()
+    {
+        $token = $this->get_login_token();
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/delete');
+        $response->assertStatus(200);
+        $response->assertJsonStructure(
+            [
+              'success',
+              'tenant',
+            ]
+        );
+    }
 }

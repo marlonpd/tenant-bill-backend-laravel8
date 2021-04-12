@@ -15,12 +15,6 @@ class AuthenticationTest extends TestCase
      * @return void
      */
 
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     public function test_required_fields_in_registering_user()
     {

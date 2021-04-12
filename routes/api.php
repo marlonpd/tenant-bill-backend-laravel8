@@ -30,7 +30,7 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
         Route::post('/refresh/token', [AuthController::class, 'refresh'])->name('refresh');
        
         Route::get('/tenants', [TenantController::class, 'index'])->name('fetchAllTenants');
-        Route::get('/tenants/{pageIndex}/get', [TenantController::class, 'getLimitedList'])->name('getLimitedList');
+        Route::get('/tenants/{pageIndex}/get', [TenantController::class, 'getLimitedList'])->name('getLimitedTenantList');
         Route::post('/tenant/store', [TenantController::class, 'store'])->name('storeTenant');
         Route::delete('/tenant/delete', [TenantController::class, 'destroy'])->name('deleteTenant');
         Route::put('/tenant/update', [TenantController::class, 'update'])->name('updateTenant');
@@ -40,13 +40,13 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
         Route::put('/meter-reading/update', [MeterReadingController::class, 'update'])->name('updateMeterReading');
         Route::post('/meter-reading/store',[MeterReadingController::class, 'store'])->name('storeMeterReading');
         Route::delete('/meter-reading/delete', [MeterReadingController::class, 'destroy'])->name('deleteMeterReading');
-        Route::get('/meter-readings/$tenantId/{pageIndex}/get', [MeterReadingController::class, 'getLimitedList'])->name('getLimitedList');
+        Route::get('/meter-readings/$tenantId/{pageIndex}/get', [MeterReadingController::class, 'getLimitedList'])->name('getLimitedMeterReadingList');
     
         Route::get('/power-rates', [PowerRateController::class, 'index'])->name('fetchAllPowerRates');
         Route::post('/power-rate/store', [PowerRateController::class, 'store'])->name('storePowerRate');
         Route::delete('/power-rate/delete', [PowerRateController::class, 'destroy'])->name('deletePowerRate');
         Route::put('/power-rate/update', [PowerRateController::class, 'update'])->name('updatePowerRate');
         Route::get('/power-rate/{id}', [PowerRateController::class, 'show'])->name('showPowerRate');
-        Route::get('/power-rates/{pageIndex}/get', [PowerRateController::class, 'getLimitedList'])->name('getLimitedList');
+        Route::get('/power-rates/{pageIndex}/get', [PowerRateController::class, 'getLimitedList'])->name('getLimitedPowerRateList');
     });
 });
