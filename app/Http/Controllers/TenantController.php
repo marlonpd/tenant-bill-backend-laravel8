@@ -32,6 +32,17 @@ class TenantController extends Controller
             'tenants' =>  TenantResource::collection($this->tenantRepository->findByOwnerId($ownerId)),
         ]);
     }
+
+    public function searchTenant(string $searchKey)
+    {
+        $ownerId = JWTAuth::user()->id;
+        $tenantsCount = $this->tenantRepository->countSearch($ownerId, $searchKey);
+
+        return response()->json([
+            'tenants' =>  TenantResource::collection($this->tenantRepository->search($ownerId, $searchKey)),
+            'count' => $tenantsCount
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *

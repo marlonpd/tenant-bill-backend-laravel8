@@ -41,37 +41,41 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
 
    public function findById(string $id): ?Tenant 
    {
-      $tenant = $this->model::where('id', $id)->first();   
+      return $this->model::where('id', $id)->first();   
+  }
 
-      return $tenant;
-    }
+  public function search(string $ownerId, string $searchKey): ?Collection
+  {
+    return $this->model::where('owner_id', $ownerId)
+                              ->orWhere('name', 'LIKE', "%{$searchKey}%")
+                              ->get();   
+  }
+
+  public function countSearch(string $ownerId, string $searchKey): ?int
+  {
+    return $this->model::where('owner_id', $ownerId)
+                             ->orWhere('name', 'LIKE', "%{$searchKey}%")
+                             ->count();   
+  }
 
   public function findByOwnerId(string $ownerId): ?Collection
   {
-      $tenants = $this->model::where('owner_id', $ownerId)->get();   
-
-      return $tenants;
+    return $this->model::where('owner_id', $ownerId)->get();   
   }
 
   public function countByOwnerId(string $ownerId): ?int
   {
-      $tenants = $this->model::where('owner_id', $ownerId)->count();   
-
-      return $tenants;
+    return $this->model::where('owner_id', $ownerId)->count();   
   }
 
   public function update(string $id, array $tenant): int 
   {
-     $tenant = $this->model::where('id', $id)->update($tenant);   
-
-     return $tenant;
+    return $this->model::where('id', $id)->update($tenant);   
   }
 
-
-  public function delete(string $id) {
-    $deletedRows = $this->model::where('id', $id)->delete();
-
-    return $deletedRows;
+  public function delete(string $id) 
+  {
+    return $this->model::where('id', $id)->delete();
   }
 
 
