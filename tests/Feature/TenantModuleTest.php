@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+  //print_r($response->getContent());  
 class TenantModuleTest extends TestCase
 {
     /**
@@ -72,8 +73,15 @@ class TenantModuleTest extends TestCase
 
     public function test_success_store_tenant()
     {
-        $token = $this->get_login_token();        
-        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/store');
+        $token = $this->get_login_token();  
+
+        $tenantData = [
+            "name" => "John Doe",
+            "meterNumber" => "999999999",
+            "meterInitialReading" => "00000000",
+        ];
+
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/store', $tenantData, ['Accept' => 'application/json']);
         $response->assertStatus(200);
         $response->assertJsonStructure(
             [
@@ -84,10 +92,58 @@ class TenantModuleTest extends TestCase
     }
 
 
+    public function test_success_search_tenant()
+    {
+        $token = $this->get_login_token();        
+
+        $sampleTenantData = [
+            'name' => 'Marlon test',
+            'meterNumber' => '9999999',
+            'meterInitialReading' => '1111111',
+        ];
+
+        $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/store', $sampleTenantData, ['Accept' => 'application/json']);
+
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('GET', '/api/tenants/search/test');
+        $response->assertStatus(200);
+        $response->assertJsonStructure(
+            [
+              'tenants',
+              'count',
+            ]
+        );
+    }
+
+
     public function test_success_update_tenant()
     {
-        $token = $this->get_login_token();
-        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/update');
+        $token = $this->get_login_token();  
+
+        $tenantData = [
+            "name" => "John Doe",
+            "meterNumber" => "999999999",
+            "meterInitialReading" => "00000000",
+        ];
+
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/store', $tenantData, ['Accept' => 'application/json']);
+        $response->assertStatus(200);
+        $response->assertJsonStructure(
+            [
+              'success',
+              'tenant',
+            ]
+        );
+
+        $tenant = $response->json()['tenant'];
+
+        $tenantData = [
+            "id" => $tenant['id'],
+            "name" => "John Doe",
+            "meterNumber" => "999999999",
+            "meterInitialReading" => "00000000",
+        ];
+
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('PUT', '/api/tenant/update', $tenantData, ['Accept' => 'application/json']);
         $response->assertStatus(200);
         $response->assertJsonStructure(
             [
@@ -99,13 +155,34 @@ class TenantModuleTest extends TestCase
 
     public function test_success_delete_tenant()
     {
-        $token = $this->get_login_token();
-        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/delete');
+        $token = $this->get_login_token();  
+
+        $tenantData = [
+            "name" => "John Doe",
+            "meterNumber" => "999999999",
+            "meterInitialReading" => "00000000",
+        ];
+
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('POST', '/api/tenant/store', $tenantData, ['Accept' => 'application/json']);
         $response->assertStatus(200);
         $response->assertJsonStructure(
             [
               'success',
               'tenant',
+            ]
+        );
+
+        $tenant = $response->json()['tenant'];
+
+        $tenantData = [
+            "id"    => $tenant['id'],
+        ];
+
+        $response =  $this->withHeader('Authorization', 'Bearer ' . $token)->json('DELETE', '/api/tenant/delete', $tenantData, ['Accept' => 'application/json']);
+        $response->assertStatus(200);
+        $response->assertJsonStructure(
+            [
+              'success',
             ]
         );
     }

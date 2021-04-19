@@ -35,6 +35,7 @@ class TenantController extends Controller
 
     public function searchTenant(string $searchKey)
     {
+
         $ownerId = JWTAuth::user()->id;
         $tenantsCount = $this->tenantRepository->countSearch($ownerId, $searchKey);
 
@@ -143,7 +144,9 @@ class TenantController extends Controller
             'name' => $request->name,
             'meter_number' => $request->meterNumber,
             'meter_initial_reading'=> $request->meterInitialReading,
+            'updated_at' => \Carbon\Carbon::now()
         ];
+
 
         $tenant = $this->tenantRepository->update($id, $payload);
 

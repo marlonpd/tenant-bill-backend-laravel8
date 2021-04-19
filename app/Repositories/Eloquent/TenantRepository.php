@@ -47,14 +47,14 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
   public function search(string $ownerId, string $searchKey): ?Collection
   {
     return $this->model::where('owner_id', $ownerId)
-                              ->orWhere('name', 'LIKE', "%{$searchKey}%")
+                              ->where('name', 'LIKE', "%{$searchKey}%")
                               ->get();   
   }
 
   public function countSearch(string $ownerId, string $searchKey): ?int
   {
     return $this->model::where('owner_id', $ownerId)
-                             ->orWhere('name', 'LIKE', "%{$searchKey}%")
+                             ->where('name', 'LIKE', "%{$searchKey}%")
                              ->count();   
   }
 
@@ -70,7 +70,7 @@ class TenantRepository extends BaseRepository implements TenantRepositoryInterfa
 
   public function update(string $id, array $tenant): int 
   {
-    return $this->model::where('id', $id)->update($tenant);   
+    return $this->model::find($id)->update($tenant);   
   }
 
   public function delete(string $id) 

@@ -35,7 +35,7 @@ Route::middleware('api')->namespace('App\Http\Controllers')->group(function () {
         Route::delete('/tenant/delete', [TenantController::class, 'destroy'])->name('deleteTenant');
         Route::put('/tenant/update', [TenantController::class, 'update'])->name('updateTenant');
         Route::get('/tenant/{id}', [TenantController::class, 'show'])->name('showTenant');
-        Route::get('/tenant/{searchKey}', [TenantController::class, 'show'])->name('searchTenant');
+        Route::get('/tenants/search/{searchKey}', [TenantController::class, 'searchTenant'])->name('searchTenant');
     
         Route::get('/meter-readings/{tenantId}', [MeterReadingController::class, 'index'])->name('fetchAllMeterReadings');
         Route::put('/meter-reading/update', [MeterReadingController::class, 'update'])->name('updateMeterReading');

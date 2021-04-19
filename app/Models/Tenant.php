@@ -19,6 +19,7 @@ class Tenant extends Model
         'owner_id',
         'meter_number',
         'meter_initial_reading',
+        'updated_at'
     ];
     
 }
